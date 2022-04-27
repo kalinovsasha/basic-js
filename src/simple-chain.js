@@ -1,70 +1,39 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-/**
- * Implement chainMaker object according to task description
- * 
- */
-
-
-
-
-
-
-
-
 const chainMaker = {
   buff:[],
   finish:``,
-  length:0,
   getLength() {
-    //throw new NotImplementedError('Not implemented');
-    return this.length
- 
+    console.log(this.buff.length)
+    return this.buff.length;
   },
-  addLink(value=(`( )~~`)) {
-   // throw new NotImplementedError('Not implemented');
-    this.buff.push(`( ${value} )~~`);
-    this.length++;
+  addLink(value=(`( )`)) {
+    this.buff.push(`( ${value} )`);
     return this
   },
   removeLink(position) {
-   // throw new NotImplementedError('Not implemented');
-      if(position>0 && position<this.length && position%1==0){
-        try {
-          this.buff.splice(position-1,1)
-        } catch (error) {
-          buff=[];
-          finish=``;
-          length=0;
-          throw new Error('You can\'t remove incorrect link!');
-        }
-      } else {
-          buff=[];
-          finish=``;
-          length=0;
-          throw new Error('You can\'t remove incorrect link!');
-        }
-        this.length--;
-    return this
+    console.log(position, this.buff.length);
+    if (Number.isInteger(position)==false || position <= 0 || position >this.buff.length) {
+      this.buff=[];
+      throw new Error("You can\'t remove incorrect link!");
+    }
+    this.buff.splice(position - 1, 1);
+    return this;
   },
+
   reverseChain() {
-   // throw new NotImplementedError('Not implemented');
-   this.buff.reverse();
+   this.buf=this.buff.reverse();
     return this
   },
   finishChain() {
-    //throw new NotImplementedError('Not implemented');
-    this.finish=this.buff.join("");
-    this.finish=this.finish.slice(0,this.finish.length-2);
+    this.finish=this.buff.join("~~");
     this.buff=[];
-    this.length=0;
     return this.finish
   }
 };
 
-//console.log(chainMaker.addLink('GHI').addLink(null).reverseChain().addLink(333).reverseChain().addLink(0).reverseChain().reverseChain().addLink('GHI').finishChain());
+//console.log(chainMaker.addLink('GHI').addLink(null).reverseChain().addLink(333).reverseChain().addLink(0).reverseChain().addLink('GHI').removeLink(2).finishChain());
 //chainMaker.addLink(1).addLink(2).addLink(null).reverseChain().finishChain();
-
 
 
 module.exports = {
