@@ -1,25 +1,38 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-/**
- * There's a list of file, since two files cannot have equal names,
- * the one which comes later will have a suffix (k),
- * where k is the smallest integer such that the found name is not used yet.
- *
- * Return an array of names that will be given to the files.
- *
- * @param {Array} names
- * @return {Array}
- *
- * @example
- * For input ["file", "file", "image", "file(1)", "file"],
- * the output should be ["file", "file(1)", "image", "file(1)(1)", "file(2)"]
- *
- */
-function renameFiles(/* names */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+
+function renameFiles(names=[]) {
+  result=[];
+  let counter=0;  
+  
+  function compare(file){
+    counter++;
+    ///////Если нету одинаковых первый проход
+    if(counter==1){
+      if(result.indexOf(file)==-1){
+        result.push(`${file}`)
+        counter=0;
+        return;
+      } 
+    }
+    ///////Второй и последующие вызовы
+    if(result.indexOf(`${file}(${counter})`)==-1){
+      result.push(`${file}(${counter})`);
+      counter=0;
+      return
+    } else {
+      compare(file)
+    } 
+  }
+  for(i in names){
+    compare(names[i])
+  }
+  return result
 }
 
+console.log( renameFiles([`d`,`d`,`d(1)`]));
+console.log(renameFiles(['doc', 'doc', 'image', 'doc(1)', 'doc']))
+//['doc', 'doc(1)', 'image', 'doc(1)(1)', 'doc(2)']);
 module.exports = {
   renameFiles
 };
